@@ -31,16 +31,10 @@ namespace WebApp_OpenIDConnect_DotNet_graph
 
             services.Configure<ForwardedHeadersOptions>(options =>
             {
-                if (string.Equals(Configuration["Codespaces"], "true", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(Configuration["CODESPACES"], "true", StringComparison.OrdinalIgnoreCase))
                 {
                     options.ForwardedHeaders |= ForwardedHeaders.XForwardedHost;
                 }
-
-                // Only loopback proxies are allowed by default.
-                // Clear that restriction because forwarders are enabled by explicit 
-                // configuration.
-                options.KnownNetworks.Clear();
-                options.KnownProxies.Clear();
             });
 
             string[] initialScopes = Configuration.GetValue<string>("DownstreamApi:Scopes")?.Split(' ');
